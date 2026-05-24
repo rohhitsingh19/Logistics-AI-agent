@@ -1,0 +1,38 @@
+# Environment variables (sensitive data)
+.env
+
+# Python virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache and temporary files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Databases (auto-generated on first run)
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Scratch and temporary testing files
+scratch/
+test_*.py
