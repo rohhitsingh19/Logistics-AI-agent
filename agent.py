@@ -13,10 +13,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# ------------------------------------------------------------------ #
-# System prompt injected into every agent run.
-# The richer the context you give here, the better the SQL quality.
-# ------------------------------------------------------------------ #
+
+# System prompt
 AGENT_PREFIX = """
 You are a senior logistics operations analyst at LoadShare India.
 You help operations teams, product managers, and leadership understand
@@ -55,26 +53,25 @@ def build_agent():
     if not api_key:
         raise EnvironmentError(
             "GROQ_API_KEY not found. "
-            "Copy .env.example → .env and paste your key from console.groq.com"
         )
 
     llm = ChatGroq(
-        model="llama-3.3-70b-versatile",  # fast + free tier
-        temperature=0,                     # deterministic SQL generation
+        model="llama-3.3-70b-versatile",  
+        temperature=0,                    
         groq_api_key=api_key,
     )
 
     db = SQLDatabase.from_uri(
         "sqlite:///logistics.db",
         include_tables=["orders", "delivery_partners", "cities", "daily_metrics"],
-        sample_rows_in_table_info=3,   # shows the agent example rows for each table
+        sample_rows_in_table_info=3,  
     )
 
     agent = create_sql_agent(
         llm=llm,
         db=db,
-        agent_type="openai-tools",   # tool-calling style (better than ReAct for SQL)
-        verbose=True,                # prints chain-of-thought to terminal — great for learning
+        agent_type="openai-tools",   
+        verbose=True,                
         max_iterations=15,
         handle_parsing_errors=True,
         prefix=AGENT_PREFIX,
@@ -83,7 +80,7 @@ def build_agent():
     return agent
 
 
-# Singleton — agent is expensive to initialise so we keep one instance
+# Singleton
 _agent = None
 
 
@@ -104,9 +101,6 @@ def ask(question: str) -> str:
     return result["output"]
 
 
-# ------------------------------------------------------------------ #
-# Quick smoke test: python agent.py
-# ------------------------------------------------------------------ #
 if __name__ == "__main__":
     test_q = "Which city had the most delayed orders?"
     print(f"\nQuestion: {test_q}\n")
