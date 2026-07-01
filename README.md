@@ -141,12 +141,3 @@ logistics-agent/
 | LLM | Groq (Llama 3.3-70B) | Free tier, 14 400 req/day, very fast |
 | Database | SQLite | Zero-setup, file-based |
 | Frontend | Vanilla HTML/CSS/JS | No build step needed |
-
----
-
-## Next steps (after this works)
-
-1. **Add MCP server** — `pip install mcp`, expose `query_logistics` as an MCP tool
-2. **Add RAG** — embed your SQL schema + business glossary into ChromaDB for better context
-3. **Deploy** — push to Railway or Render (both free tiers)
-4. **Add evaluation** — log questions + answers, rate them, build a benchmark set
